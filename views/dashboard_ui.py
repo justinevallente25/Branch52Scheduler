@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from datetime import datetime
 
 
 
@@ -9,10 +10,13 @@ class DashboardUI:
     def __init__(
         self,
         parent,
-        manager
+        manager,
+        open_schedule
     ):
 
         self.manager = manager
+
+        self.open_schedule = open_schedule
 
 
         self.frame = tk.Frame(
@@ -29,15 +33,33 @@ class DashboardUI:
 
         self.create_ui()
 
+        self.update_clock()
+
 
 
     def create_ui(self):
 
 
+        # ==========================
         # HEADER
+        # ==========================
+
+        header = tk.Frame(
+            self.frame,
+            bg="#eef2f7"
+        )
+
+
+        header.pack(
+            fill="x",
+            padx=30,
+            pady=(25,10)
+        )
+
+
 
         tk.Label(
-            self.frame,
+            header,
             text="Dashboard",
             bg="#eef2f7",
             fg="#003366",
@@ -47,9 +69,25 @@ class DashboardUI:
                 "bold"
             )
         ).pack(
-            anchor="w",
-            padx=30,
-            pady=(25,10)
+            side="left"
+        )
+
+
+
+        self.clock_label = tk.Label(
+            header,
+            text="",
+            bg="#eef2f7",
+            fg="#555",
+            font=(
+                "Segoe UI",
+                11
+            )
+        )
+
+
+        self.clock_label.pack(
+            side="right"
         )
 
 
@@ -70,7 +108,9 @@ class DashboardUI:
 
 
 
-        # CARDS
+        # ==========================
+        # SUMMARY CARDS
+        # ==========================
 
         cards = tk.Frame(
             self.frame,
@@ -86,7 +126,7 @@ class DashboardUI:
 
 
 
-        self.create_card(
+        self.today_value = self.create_card(
             cards,
             "Today's Hearings",
             len(
@@ -95,7 +135,8 @@ class DashboardUI:
         )
 
 
-        self.create_card(
+
+        self.upcoming_value = self.create_card(
             cards,
             "Upcoming Cases",
             len(
@@ -104,7 +145,8 @@ class DashboardUI:
         )
 
 
-        self.create_card(
+
+        self.total_value = self.create_card(
             cards,
             "Total Cases",
             self.manager.get_total_cases()
@@ -112,7 +154,66 @@ class DashboardUI:
 
 
 
+        # ==========================
+        # QUICK ACTION BUTTONS
+        # ==========================
+
+        action_frame = tk.Frame(
+            self.frame,
+            bg="#eef2f7"
+        )
+
+
+        action_frame.pack(
+            fill="x",
+            padx=30,
+            pady=(0,15)
+        )
+
+
+
+        tk.Button(
+            action_frame,
+            text="+ New Schedule",
+            bg="#003366",
+            fg="white",
+            font=(
+                "Segoe UI",
+                10,
+                "bold"
+            ),
+            width=18,
+            command=self.open_schedule
+        ).pack(
+            side="left",
+            padx=5
+        )
+
+
+
+        tk.Button(
+            action_frame,
+            text="Refresh",
+            bg="#2E8B57",
+            fg="white",
+            font=(
+                "Segoe UI",
+                10,
+                "bold"
+            ),
+            width=18,
+            command=self.refresh_dashboard
+        ).pack(
+            side="left",
+            padx=5
+        )
+
+
+
+        # ==========================
         # TABLE TITLE
+        # ==========================
+
 
         tk.Label(
             self.frame,
@@ -133,6 +234,11 @@ class DashboardUI:
 
         self.create_table()
 
+
+
+    # ==========================
+    # CARD
+    # ==========================
 
 
     def create_card(
@@ -181,7 +287,7 @@ class DashboardUI:
 
 
 
-        tk.Label(
+        value_label = tk.Label(
             card,
             text=value,
             bg="white",
@@ -191,8 +297,20 @@ class DashboardUI:
                 25,
                 "bold"
             )
-        ).pack()
+        )
 
+
+        value_label.pack()
+
+
+
+        return value_label
+
+
+
+    # ==========================
+    # TABLE
+    # ==========================
 
 
     def create_table(self):
@@ -251,6 +369,7 @@ class DashboardUI:
 
         for column in columns:
 
+
             self.table.heading(
                 column,
                 text=headings[column]
@@ -264,15 +383,37 @@ class DashboardUI:
 
 
 
+        scrollbar = ttk.Scrollbar(
+            table_frame,
+            orient="vertical",
+            command=self.table.yview
+        )
+
+
+        self.table.configure(
+            yscrollcommand=scrollbar.set
+        )
+
+
+        scrollbar.pack(
+            side="right",
+            fill="y"
+        )
+
+
         self.table.pack(
             fill="both",
             expand=True
         )
 
 
-
         self.load_today_schedule()
 
+
+
+    # ==========================
+    # LOAD TODAY
+    # ==========================
 
 
     def load_today_schedule(self):
@@ -312,3 +453,59 @@ class DashboardUI:
                 )
 
             )
+
+
+
+    # ==========================
+    # REFRESH
+    # ==========================
+
+
+    def refresh_dashboard(self):
+
+
+        self.today_value.config(
+            text=len(
+                self.manager.get_today_cases()
+            )
+        )
+
+
+        self.upcoming_value.config(
+            text=len(
+                self.manager.get_upcoming_cases()
+            )
+        )
+
+
+        self.total_value.config(
+            text=self.manager.get_total_cases()
+        )
+
+
+        self.load_today_schedule()
+
+
+
+    # ==========================
+    # CLOCK
+    # ==========================
+
+
+    def update_clock(self):
+
+
+        now = datetime.now()
+
+
+        self.clock_label.config(
+            text=now.strftime(
+                "%A, %B %d, %Y | %I:%M:%S %p"
+            )
+        )
+
+
+        self.frame.after(
+            1000,
+            self.update_clock
+        )

@@ -1,29 +1,22 @@
 [
     {
         "id": 1,
-        "case_no": "dwadwadwa222",
-        "complainant": "dwadwa",
-        "respondent": "dwadwadwa",
+        "case_no": "NLRC-001",
+        "complainant": "Juan Dela Cruz",
+        "respondent": "Pedro Santos",
         "date": "2026-07-17",
         "time": "09:30 AM",
-        "proceeding": "Settlement"
+        "proceeding": "Settlement",
+        "status": "Pending"
     },
     {
         "id": 2,
-        "case_no": "22222",
-        "complainant": "qq",
-        "respondent": "vv",
-        "date": "2026-07-17",
+        "case_no": "1",
+        "complainant": "1",
+        "respondent": "1",
+        "date": "2026-09-01",
         "time": "09:30 AM",
-        "proceeding": "Settlement"
-    },
-    {
-        "id": 3,
-        "case_no": "123",
-        "complainant": "123",
-        "respondent": "123",
-        "date": "2026-07-17",
-        "time": "09:30 AM",
-        "proceeding": "Settlement"
+        "proceeding": "Settlement",
+        "status": "Pending"
     }
 ]

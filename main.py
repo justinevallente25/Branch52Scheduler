@@ -2,6 +2,8 @@ import tkinter as tk
 
 
 from controllers.schedule_manager import ScheduleManager
+from controllers.settings_manager import SettingsManager
+from controllers.holiday_manager import HolidayManager
 
 
 from views.dashboard_ui import DashboardUI
@@ -27,8 +29,30 @@ class Application:
 
 
 
+        # ==========================
+        # CONTROLLERS
+        # ==========================
+
+
+        self.manager = ScheduleManager()
+
+        self.settings = SettingsManager()
+
+        self.holiday_manager = HolidayManager()
+
+
+
+        # ==========================
+        # WINDOW SETTINGS
+        # ==========================
+
+
         self.root.title(
-            "Court Proceedings Scheduler"
+
+            self.settings.get(
+                "system_name"
+            )
+
         )
 
 
@@ -48,19 +72,26 @@ class Application:
 
 
 
-        self.manager = ScheduleManager()
-
+        # ==========================
+        # MAIN FRAME
+        # ==========================
 
 
         self.main_frame = tk.Frame(
+
             self.root,
+
             bg="#eef2f7"
+
         )
 
 
         self.main_frame.pack(
+
             fill="both",
+
             expand=True
+
         )
 
 
@@ -69,6 +100,11 @@ class Application:
 
 
 
+
+
+    # ==========================
+    # CENTER WINDOW
+    # ==========================
 
 
     def center_window(self):
@@ -85,27 +121,42 @@ class Application:
 
 
         x = (
+
             self.root.winfo_screenwidth()
+
             -
+
             width
+
         ) // 2
 
 
 
         y = (
+
             self.root.winfo_screenheight()
+
             -
+
             height
+
         ) // 2
 
 
 
         self.root.geometry(
+
             f"{width}x{height}+{x}+{y}"
+
         )
 
 
 
+
+
+    # ==========================
+    # CLEAR PAGE
+    # ==========================
 
 
     def clear_page(self):
@@ -113,10 +164,16 @@ class Application:
 
         for widget in self.main_frame.winfo_children():
 
+
             widget.destroy()
 
 
 
+
+
+    # ==========================
+    # DASHBOARD
+    # ==========================
 
 
     def show_dashboard(self):
@@ -127,32 +184,53 @@ class Application:
 
 
         layout = tk.Frame(
+
             self.main_frame,
+
             bg="#eef2f7"
+
         )
 
 
         layout.pack(
+
             fill="both",
+
             expand=True
+
         )
 
 
 
         Navbar(
+
             layout,
+
             self
+
         )
 
 
 
         DashboardUI(
+
             layout,
-            self.manager
+
+            self.manager,
+
+            self.show_schedule
+
         )
 
 
 
+
+
+
+
+    # ==========================
+    # SCHEDULE
+    # ==========================
 
 
     def show_schedule(self):
@@ -163,34 +241,53 @@ class Application:
 
 
         layout = tk.Frame(
+
             self.main_frame,
+
             bg="#eef2f7"
+
         )
 
 
         layout.pack(
+
             fill="both",
+
             expand=True
+
         )
 
 
 
         Navbar(
+
             layout,
+
             self
+
         )
 
 
 
         ScheduleUI(
+
             layout,
-            self.manager
+
+            self.manager,
+
+            self.holiday_manager
+
         )
 
 
 
 
 
+
+
+# ==========================
+# START APPLICATION
+# ==========================
 
 
 def start_application():
@@ -201,7 +298,9 @@ def start_application():
 
 
     app = Application(
+
         root
+
     )
 
 
@@ -231,8 +330,11 @@ if __name__ == "__main__":
 
 
     LoadingScreen(
+
         root,
+
         start_application
+
     )
 
 

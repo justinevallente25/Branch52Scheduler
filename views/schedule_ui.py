@@ -12,10 +12,12 @@ class ScheduleUI:
     def __init__(
         self,
         parent,
-        manager
+        manager,
+        holiday_manager
     ):
 
         self.manager = manager
+        self.holiday_manager = holiday_manager
 
         self.selected_id = None
 
@@ -31,6 +33,7 @@ class ScheduleUI:
             parent,
             bg=self.BACKGROUND
         )
+
 
         self.frame.pack(
             fill="both",
@@ -172,7 +175,7 @@ class ScheduleUI:
         )
 
 
-        for i in range(6):
+        for i in range(7):
 
             form.grid_rowconfigure(
                 i,
@@ -286,7 +289,10 @@ class ScheduleUI:
             column=1,
             sticky="w"
         )
-                # TIME
+
+
+
+        # TIME
 
 
         create_label(
@@ -424,7 +430,39 @@ class ScheduleUI:
 
 
 
-        # BUTTON AREA
+        # STATUS
+
+
+        create_label(
+            "Status",
+            6
+        )
+
+
+        self.status = ttk.Combobox(
+            form,
+            values=[
+                "Pending",
+                "Completed",
+                "Cancelled",
+                "Rescheduled"
+            ],
+            width=42,
+            state="readonly"
+        )
+
+
+        self.status.set(
+            "Pending"
+        )
+
+
+        self.status.grid(
+            row=6,
+            column=1
+        )
+        
+                # BUTTON AREA
 
 
         action_frame = tk.Frame(
@@ -443,32 +481,32 @@ class ScheduleUI:
 
         buttons = [
 
-    (
-        "➕ ADD",
-        self.add
-    ),
+            (
+                "➕ ADD",
+                self.add
+            ),
 
-    (
-        "✏ UPDATE",
-        self.update
-    ),
+            (
+                "✏ UPDATE",
+                self.update
+            ),
 
-    (
-        "🗑 DELETE",
-        self.delete
-    ),
+            (
+                "🗑 DELETE",
+                self.delete
+            ),
 
-    (
-        "↻ RESET",
-        self.clear
-    ),
+            (
+                "↻ RESET",
+                self.clear
+            ),
 
-    (
-        "🔄 REFRESH",
-        self.refresh
-    )
+            (
+                "🔄 REFRESH",
+                self.refresh
+            )
 
-]
+        ]
 
 
 
@@ -558,7 +596,8 @@ class ScheduleUI:
                 "date",
                 "party",
                 "time",
-                "type"
+                "type",
+                "status"
 
             ),
 
@@ -575,7 +614,8 @@ class ScheduleUI:
             "date":"DATE",
             "party":"PARTIES",
             "time":"TIME",
-            "type":"PROCEEDING"
+            "type":"PROCEEDING",
+            "status":"STATUS"
 
         }
 
@@ -611,7 +651,7 @@ class ScheduleUI:
 
         self.tree.column(
             "party",
-            width=350
+            width=300
         )
 
 
@@ -624,6 +664,12 @@ class ScheduleUI:
         self.tree.column(
             "type",
             width=220
+        )
+
+
+        self.tree.column(
+            "status",
+            width=120
         )
 
 
@@ -679,7 +725,9 @@ class ScheduleUI:
     def add(self):
 
         if not self.validate():
+
             return
+
 
 
         schedule = Schedule(
@@ -696,9 +744,12 @@ class ScheduleUI:
 
             self.get_time(),
 
-            self.proceeding.get()
+            self.proceeding.get(),
+
+            self.status.get()
 
         )
+
 
 
         self.manager.add(
@@ -709,6 +760,8 @@ class ScheduleUI:
         self.refresh()
 
         self.clear()
+
+
 
 
 
@@ -739,14 +792,20 @@ class ScheduleUI:
 
             self.get_time(),
 
-            self.proceeding.get()
+            self.proceeding.get(),
+
+            self.status.get()
 
         )
 
 
+
         self.manager.update(
+
             self.selected_id,
+
             schedule
+
         )
 
 
@@ -756,24 +815,37 @@ class ScheduleUI:
 
 
 
+
+
     def delete(self):
 
         if not self.selected_id:
+
             return
 
 
+
         if messagebox.askyesno(
+
             "Delete",
+
             "Delete selected schedule?"
+
         ):
 
+
             self.manager.delete(
+
                 self.selected_id
+
             )
+
 
             self.refresh()
 
             self.clear()
+
+
 
 
 
@@ -782,60 +854,88 @@ class ScheduleUI:
 
     def validate(self):
 
+
         if not self.case_no.get().strip():
 
             messagebox.showwarning(
+
                 "Required",
+
                 "Case number required"
+
             )
 
             return False
+
 
 
         if not self.complainant.get().strip():
 
             messagebox.showwarning(
+
                 "Required",
+
                 "Complainant required"
+
             )
 
             return False
+
 
 
         if not self.respondent.get().strip():
 
             messagebox.showwarning(
+
                 "Required",
+
                 "Respondent required"
+
             )
 
             return False
+
 
 
         return True
 
 
 
+
+
     def get_time(self):
 
         return (
+
             f"{self.hour.get()}:"
+
             f"{self.minute.get()} "
+
             f"{self.ampm.get()}"
+
         )
+
+
 
 
 
     def refresh(self):
 
+
         self.tree.delete(
+
             *self.tree.get_children()
+
         )
 
 
+
         for index,s in enumerate(
+
             self.manager.schedules
+
         ):
+
 
             self.tree.insert(
 
@@ -846,18 +946,27 @@ class ScheduleUI:
                 values=(
 
                     s.id,
+
                     s.case_no,
+
                     s.date,
+
                     s.get_parties(),
+
                     s.time,
-                    s.proceeding
+
+                    s.proceeding,
+
+                    s.status
 
                 ),
 
                 tags=(
 
                     "even"
+
                     if index % 2 == 0
+
                     else "odd"
 
                 )
@@ -866,86 +975,144 @@ class ScheduleUI:
 
 
 
+
+
     def select(self,event):
+
 
         item = self.tree.focus()
 
 
         if not item:
+
             return
 
 
+
         values = self.tree.item(
+
             item,
+
             "values"
+
         )
+
 
 
         self.selected_id = int(
+
             values[0]
+
         )
+
 
 
         self.case_no.delete(
+
             0,
+
             tk.END
+
         )
 
+
         self.case_no.insert(
+
             0,
+
             values[1]
+
         )
 
 
 
         parties = values[3].split(
+
             " vs "
+
         )
+
 
 
         if len(parties) == 2:
 
+
             self.complainant.delete(
+
                 0,
+
                 tk.END
+
             )
 
+
             self.complainant.insert(
+
                 0,
+
                 parties[0]
+
             )
+
 
 
             self.respondent.delete(
+
                 0,
+
                 tk.END
+
             )
 
+
             self.respondent.insert(
+
                 0,
+
                 parties[1]
+
             )
+
 
 
         self.proceeding.set(
+
             values[5]
+
         )
+
+
+
+        self.status.set(
+
+            values[6]
+
+        )
+
+
 
 
 
     def search(self):
 
+
         results = self.manager.search(
+
             self.search_box.get()
+
         )
 
 
         self.tree.delete(
+
             *self.tree.get_children()
+
         )
 
 
+
         for s in results:
+
 
             self.tree.insert(
 
@@ -956,11 +1123,18 @@ class ScheduleUI:
                 values=(
 
                     s.id,
+
                     s.case_no,
+
                     s.date,
+
                     s.get_parties(),
+
                     s.time,
-                    s.proceeding
+
+                    s.proceeding,
+
+                    s.status
 
                 )
 
@@ -968,63 +1142,44 @@ class ScheduleUI:
 
 
 
+
+
     def clear(self):
 
+
         self.case_no.delete(
+
             0,
+
             tk.END
+
         )
 
 
         self.complainant.delete(
+
             0,
+
             tk.END
+
         )
 
 
         self.respondent.delete(
+
             0,
+
             tk.END
+
         )
 
 
         self.selected_id = None
-        
-    def refresh(self):
 
-        self.tree.delete(
-            *self.tree.get_children()
+
+
+        self.status.set(
+
+            "Pending"
+
         )
-
-
-        for index,s in enumerate(
-            self.manager.schedules
-        ):
-
-            tag = (
-                "even"
-                if index % 2 == 0
-                else "odd"
-            )
-
-
-            self.tree.insert(
-
-                "",
-
-                "end",
-
-                values=(
-
-                    s.id,
-                    s.case_no,
-                    s.date,
-                    s.get_parties(),
-                    s.time,
-                    s.proceeding
-
-                ),
-
-                tags=(tag,)
-
-            )
