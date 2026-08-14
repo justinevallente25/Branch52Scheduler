@@ -1,22 +1,112 @@
 [
     {
-        "id": 1,
-        "case_no": "NLRC-001",
-        "complainant": "Juan Dela Cruz",
-        "respondent": "Pedro Santos",
-        "date": "2026-07-17",
-        "time": "09:30 AM",
-        "proceeding": "Settlement",
-        "status": "Pending"
+        "id": 16,
+        "case_no": "06-01095-26",
+        "complainant": "FLORES",
+        "respondent": "SINGASHIP",
+        "date": "2026-08-05",
+        "time": "9:30 AM",
+        "proceeding": "2nd Mandatory Conference",
+        "status": "Completed"
     },
     {
-        "id": 2,
-        "case_no": "1",
-        "complainant": "1",
-        "respondent": "1",
-        "date": "2026-09-01",
-        "time": "09:30 AM",
-        "proceeding": "Settlement",
+        "id": 17,
+        "case_no": "07-00603-26",
+        "complainant": "SHEENA ROSE GUINAB CALAYO",
+        "respondent": "RML SUPERIORE FOOD CORP.",
+        "date": "2026-08-05",
+        "time": "9:30 AM",
+        "proceeding": "2nd Mandatory Conference",
+        "status": "Completed"
+    },
+    {
+        "id": 18,
+        "case_no": "07-00943-26",
+        "complainant": "ALLAN GATCHALIAN LICOPIT",
+        "respondent": "BOSON COMPANY/ BOSON INCORPORATED",
+        "date": "2026-08-05",
+        "time": "9:30 AM",
+        "proceeding": "1st Mandatory Conference",
+        "status": "Completed"
+    },
+    {
+        "id": 19,
+        "case_no": "06-00520-26",
+        "complainant": "FREDDIE BACARON SORIANO",
+        "respondent": "DOHLE SEAFRONT CREWING (MANILA) INC.",
+        "date": "2026-08-05",
+        "time": "10:00 AM",
+        "proceeding": "Reply",
+        "status": "Completed"
+    },
+    {
+        "id": 20,
+        "case_no": "07-01078-26",
+        "complainant": "VICTOR PAJES PANCIPANE",
+        "respondent": "MAYER STEEL PIPE CORPORATION",
+        "date": "2026-08-06",
+        "time": "9:30 am",
+        "proceeding": "1st Mandatory Conference",
+        "status": "Completed"
+    },
+    {
+        "id": 21,
+        "case_no": "07-01078-26",
+        "complainant": "VICTOR PAJES PANCIPANE",
+        "respondent": "MAYER STEEL PIPE CORPORATION",
+        "date": "2026-08-13",
+        "time": "9:30 am",
+        "proceeding": "2nd Mandatory Conference",
+        "status": "Completed"
+    },
+    {
+        "id": 22,
+        "case_no": "06-01331-26",
+        "complainant": "EFREN PIMENTEL OSO",
+        "respondent": "JACKPHERLYN TRANSPORT CORP. / RENAN TRANSPORT",
+        "date": "2026-08-06",
+        "time": "9:30 AM",
+        "proceeding": "1st Mandatory Conference",
+        "status": "Completed"
+    },
+    {
+        "id": 23,
+        "case_no": "06-01331-26",
+        "complainant": "EFREN PIMENTEL OSO",
+        "respondent": "JACKPHERLYN TRANSPORT CORP. / RENAN TRANSPORT",
+        "date": "2026-08-13",
+        "time": "9:30 AM",
+        "proceeding": "2nd Mandatory Conference",
+        "status": "Completed"
+    },
+    {
+        "id": 24,
+        "case_no": "07-00269-26",
+        "complainant": "JOEL ESTEVA BRILLO",
+        "respondent": "BRIGHT MARITIME CORPORATION / CLEMKO SHIPMANAGEMENT S.A",
+        "date": "2026-08-06",
+        "time": "9:30 AM",
+        "proceeding": "2nd Mandatory Conference",
+        "status": "Completed"
+    },
+    {
+        "id": 25,
+        "case_no": "06-00978-26",
+        "complainant": "JONAH ANDIA CASPE, ET AL.",
+        "respondent": "WELLMADE MANUFACTURING CORP. / LUCKY FORTUNE MANPOWER SERVICES CORP.",
+        "date": "2026-08-06",
+        "time": "10:00 AM",
+        "proceeding": "Reply",
+        "status": "Completed"
+    },
+    {
+        "id": 26,
+        "case_no": "(L)-06-00179-26",
+        "complainant": "WEINJUN UGAY LAURDEN",
+        "respondent": "LIFELINKS INTERNATIONAL RESOURCES INC.",
+        "date": "2026-08-14",
+        "time": "10:00 am",
+        "proceeding": "P/P",
         "status": "Pending"
     }
 ]

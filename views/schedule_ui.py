@@ -1,3 +1,5 @@
+# views/schedule_ui.py
+
 import tkinter as tk
 from tkinter import ttk, messagebox
 from tkcalendar import DateEntry
@@ -5,1181 +7,463 @@ from tkcalendar import DateEntry
 from models.schedule import Schedule
 
 
-
 class ScheduleUI:
 
+    def __init__(self, parent, manager, holiday_manager):
 
-    def __init__(
-        self,
-        parent,
-        manager,
-        holiday_manager
-    ):
+        self.parent = parent
 
         self.manager = manager
+
         self.holiday_manager = holiday_manager
 
         self.selected_id = None
 
+        # COLORS
 
         self.PRIMARY = "#1f4e79"
         self.SECONDARY = "#2e75b6"
         self.SUCCESS = "#2e8b57"
         self.DANGER = "#c0392b"
+
         self.BACKGROUND = "#eef2f7"
 
+        self.WHITE = "#ffffff"
+        self.TEXT = "#2c3e50"
 
-        self.frame = tk.Frame(
-            parent,
-            bg=self.BACKGROUND
-        )
+        self.create_ui()
 
+        self.load_data()
 
-        self.frame.pack(
-            fill="both",
-            expand=True
-        )
+    # ==========================
+    # CREATE UI
+    # ==========================
 
+    def create_ui(self):
 
-        self.setup_style()
+        self.frame = tk.Frame(self.parent, bg=self.BACKGROUND)
 
-        self.build_ui()
+        self.frame.pack(fill="both", expand=True)
 
-        self.refresh()
-
-
-
-    # ================= STYLE =================
-
-
-    def setup_style(self):
-
-        style = ttk.Style()
-
-        style.theme_use(
-            "clam"
-        )
-
-
-        style.configure(
-            "Treeview",
-            rowheight=38,
-            font=(
-                "Segoe UI",
-                10
-            ),
-            background="white",
-            fieldbackground="white"
-        )
-
-
-        style.configure(
-            "Treeview.Heading",
-            font=(
-                "Segoe UI",
-                10,
-                "bold"
-            ),
-            background=self.PRIMARY,
-            foreground="white"
-        )
-
-
-        style.map(
-            "Treeview",
-            background=[
-                (
-                    "selected",
-                    self.SECONDARY
-                )
-            ],
-            foreground=[
-                (
-                    "selected",
-                    "white"
-                )
-            ]
-        )
-
-
-        style.configure(
-            "Action.TButton",
-            font=(
-                "Segoe UI",
-                10,
-                "bold"
-            ),
-            padding=8
-        )
-
-
-
-    # ================= UI =================
-
-
-    def build_ui(self):
-
-
+        # ======================
         # HEADER
+        # ======================
 
-        header = tk.Frame(
-            self.frame,
-            bg=self.PRIMARY,
-            height=70
-        )
+        header = tk.Frame(self.frame, bg=self.PRIMARY, height=60)
 
-
-        header.pack(
-            fill="x"
-        )
-
+        header.pack(fill="x")
 
         title = tk.Label(
             header,
-            text="📅 Court Proceedings Scheduler",
+            text="⚖ Court Hearing Schedule System",
+            font=("Segoe UI", 20, "bold"),
             bg=self.PRIMARY,
             fg="white",
-            font=(
-                "Segoe UI",
-                22,
-                "bold"
-            )
         )
 
+        title.pack(pady=12)
 
-        title.pack(
-            padx=20,
-            pady=15,
-            anchor="w"
-        )
-
-
-
+        # ======================
         # FORM CARD
+        # ======================
 
+        form_card = tk.Frame(self.frame, bg=self.WHITE, bd=1, relief="solid")
 
-        form = tk.Frame(
-            self.frame,
-            bg="white",
-            padx=30,
-            pady=20,
-            relief="solid",
-            bd=1
+        form_card.pack(padx=25, pady=15, fill="x")
+
+        form_header = tk.Label(
+            form_card,
+            text="📋 Hearing Information",
+            font=("Segoe UI", 13, "bold"),
+            bg=self.SECONDARY,
+            fg="white",
+            anchor="w",
+            padx=15,
         )
 
+        form_header.pack(fill="x")
 
-        form.pack(
-            fill="x",
-            padx=20,
-            pady=15
-        )
+        form = tk.Frame(form_card, bg=self.WHITE)
 
+        form.pack(pady=15)
 
-        for i in range(7):
+        left = tk.Frame(form, bg=self.WHITE)
 
-            form.grid_rowconfigure(
-                i,
-                minsize=42
-            )
+        left.grid(row=0, column=0, padx=30)
 
+        self.case_entry = self.create_entry(left, "📄 NLRC Case No:", 0)
 
+        self.complainant_entry = self.create_entry(left, "👤 Complainant:", 1)
 
-        def create_label(text,row):
+        self.respondent_entry = self.create_entry(left, "👤 Respondent:", 2)
+        # RIGHT SIDE
 
-            tk.Label(
-                form,
-                text=text,
-                bg="white",
-                fg="#444",
-                font=(
-                    "Segoe UI",
-                    10,
-                    "bold"
-                )
-            ).grid(
-                row=row,
-                column=0,
-                sticky="w",
-                pady=5
-            )
+        right = tk.Frame(form, bg=self.WHITE)
 
-
-
-        def create_entry():
-
-            return tk.Entry(
-                form,
-                width=60,
-                font=(
-                    "Segoe UI",
-                    11
-                ),
-                relief="flat",
-                bd=5,
-                highlightthickness=1,
-                highlightbackground="#cccccc"
-            )
-
-
-
-        create_label(
-            "NLRC Case No",
-            0
-        )
-
-
-        self.case_no = create_entry()
-
-        self.case_no.grid(
-            row=0,
-            column=1
-        )
-
-
-
-        create_label(
-            "Complainant",
-            1
-        )
-
-
-        self.complainant = create_entry()
-
-        self.complainant.grid(
-            row=1,
-            column=1
-        )
-
-
-
-        create_label(
-            "Respondent",
-            2
-        )
-
-
-        self.respondent = create_entry()
-
-        self.respondent.grid(
-            row=2,
-            column=1
-        )
-
-
-
-        create_label(
-            "Hearing Date",
-            3
-        )
-
-
-        self.date = DateEntry(
-            form,
-            width=18,
-            date_pattern="yyyy-mm-dd",
-            font=(
-                "Segoe UI",
-                11
-            )
-        )
-
-
-        self.date.grid(
-            row=3,
-            column=1,
-            sticky="w"
-        )
-
-
-
-        # TIME
-
-
-        create_label(
-            "Time",
-            4
-        )
-
-
-        time_frame = tk.Frame(
-            form,
-            bg="white"
-        )
-
-
-        time_frame.grid(
-            row=4,
-            column=1,
-            sticky="w"
-        )
-
-
-
-        self.hour = ttk.Combobox(
-            time_frame,
-            values=[
-                f"{x:02}"
-                for x in range(1,13)
-            ],
-            width=5,
-            state="readonly"
-        )
-
-
-        self.hour.set(
-            "09"
-        )
-
-
-        self.hour.pack(
-            side="left"
-        )
-
-
+        right.grid(row=0, column=1, padx=30)
 
         tk.Label(
-            time_frame,
-            text=":",
-            bg="white",
-            font=(
-                "Segoe UI",
-                11,
-                "bold"
-            )
-        ).pack(
-            side="left"
+            right,
+            text="📅 Date:",
+            bg=self.WHITE,
+            fg=self.TEXT,
+            font=("Segoe UI", 10, "bold"),
+        ).grid(row=0, column=0, sticky="w", padx=5, pady=8)
+
+        self.date_entry = DateEntry(
+            right, width=22, date_pattern="yyyy-mm-dd", font=("Segoe UI", 10)
         )
 
+        self.date_entry.grid(row=0, column=1, padx=5, pady=8)
 
+        self.date_entry.bind("<<DateEntrySelected>>", self.check_selected_date)
 
-        self.minute = ttk.Combobox(
-            time_frame,
-            values=[
-                f"{x:02}"
-                for x in range(60)
-            ],
-            width=5,
-            state="readonly"
+        self.holiday_label = tk.Label(
+            right, text="", bg=self.WHITE, fg=self.DANGER, font=("Segoe UI", 9, "bold")
         )
 
+        self.holiday_label.grid(row=3, column=0, columnspan=2, pady=5)
 
-        self.minute.set(
-            "30"
-        )
+        self.time_entry = self.create_entry(right, "⏰ Time:", 1)
 
-
-        self.minute.pack(
-            side="left"
-        )
-
-
-
-        self.ampm = ttk.Combobox(
-            time_frame,
-            values=[
-                "AM",
-                "PM"
-            ],
-            width=5,
-            state="readonly"
-        )
-
-
-        self.ampm.set(
-            "AM"
-        )
-
-
-        self.ampm.pack(
-            side="left",
-            padx=5
-        )
-
-
-
-        create_label(
-            "Proceeding",
-            5
-        )
-
+        tk.Label(
+            right,
+            text="⚖ Proceeding:",
+            bg=self.WHITE,
+            fg=self.TEXT,
+            font=("Segoe UI", 10, "bold"),
+        ).grid(row=2, column=0, sticky="w", padx=5, pady=8)
 
         self.proceeding = ttk.Combobox(
-            form,
+            right,
+            width=28,
+            state="readonly",
             values=[
                 "1st Mandatory Conference",
                 "2nd Mandatory Conference",
                 "Settlement",
                 "Reply",
                 "Execution Conference",
-                "Position Paper"
+                "P/P",
+                "Position Paper",
             ],
-            width=42,
-            state="readonly"
         )
 
+        self.proceeding.grid(row=2, column=1, padx=5, pady=8)
 
-        self.proceeding.set(
-            "Settlement"
-        )
+        # ======================
+        # BUTTONS
+        # ======================
 
+        buttons = tk.Frame(self.frame, bg=self.BACKGROUND)
 
-        self.proceeding.grid(
-            row=5,
-            column=1
-        )
+        buttons.pack(pady=10)
 
-
-
-        # STATUS
-
-
-        create_label(
-            "Status",
-            6
-        )
-
-
-        self.status = ttk.Combobox(
-            form,
-            values=[
-                "Pending",
-                "Completed",
-                "Cancelled",
-                "Rescheduled"
-            ],
-            width=42,
-            state="readonly"
-        )
-
-
-        self.status.set(
-            "Pending"
-        )
-
-
-        self.status.grid(
-            row=6,
-            column=1
-        )
-        
-                # BUTTON AREA
-
-
-        action_frame = tk.Frame(
-            self.frame,
-            bg=self.BACKGROUND
-        )
-
-
-        action_frame.pack(
-            fill="x",
-            padx=20,
-            pady=5
-        )
-
-
-
-        buttons = [
-
-            (
-                "➕ ADD",
-                self.add
-            ),
-
-            (
-                "✏ UPDATE",
-                self.update
-            ),
-
-            (
-                "🗑 DELETE",
-                self.delete
-            ),
-
-            (
-                "↻ RESET",
-                self.clear
-            ),
-
-            (
-                "🔄 REFRESH",
-                self.refresh
-            )
-
-        ]
-
-
-
-        for text,cmd in buttons:
-
-
-            ttk.Button(
-                action_frame,
-                text=text,
-                style="Action.TButton",
-                command=cmd
-            ).pack(
-                side="left",
-                padx=5
-            )
-
-
-
-        search_frame = tk.Frame(
-            action_frame,
-            bg=self.BACKGROUND
-        )
-
-
-        search_frame.pack(
-            side="right"
-        )
-
-
-
-        self.search_box = tk.Entry(
-            search_frame,
-            width=25,
-            font=(
-                "Segoe UI",
-                11
-            )
-        )
-
-
-        self.search_box.pack(
-            side="left",
-            padx=5
-        )
-
-
-
-        ttk.Button(
-            search_frame,
-            text="🔍 SEARCH",
-            style="Action.TButton",
-            command=self.search
-        ).pack(
-            side="left"
-        )
-
-
-
-        # TABLE
-
-
-        table_frame = tk.Frame(
-            self.frame,
-            bg="white",
-            relief="solid",
-            bd=1
-        )
-
-
-        table_frame.pack(
-            fill="both",
-            expand=True,
-            padx=20,
-            pady=15
-        )
-
-
-
-        self.tree = ttk.Treeview(
-
-            table_frame,
-
-            columns=(
-
-                "id",
-                "case",
-                "date",
-                "party",
-                "time",
-                "type",
-                "status"
-
-            ),
-
-            show="headings"
-
-        )
-
-
-
-        headings = {
-
-            "id":"",
-            "case":"CASE NO",
-            "date":"DATE",
-            "party":"PARTIES",
-            "time":"TIME",
-            "type":"PROCEEDING",
-            "status":"STATUS"
-
+        button_style = {
+            "font": ("Segoe UI", 10, "bold"),
+            "fg": "white",
+            "relief": "flat",
+            "width": 15,
+            "cursor": "hand2",
         }
 
+        tk.Button(
+            buttons,
+            text="➕ Add Schedule",
+            bg=self.SUCCESS,
+            command=self.add,
+            **button_style,
+        ).grid(row=0, column=0, padx=8)
 
+        tk.Button(
+            buttons,
+            text="✏ Update",
+            bg=self.SECONDARY,
+            command=self.update,
+            **button_style,
+        ).grid(row=0, column=1, padx=8)
 
-        for col in self.tree["columns"]:
+        tk.Button(
+            buttons,
+            text="🗑 Delete",
+            bg=self.DANGER,
+            command=self.delete,
+            **button_style,
+        ).grid(row=0, column=2, padx=8)
 
-            self.tree.heading(
-                col,
-                text=headings[col]
-            )
+        tk.Button(
+            buttons, text="↻ Clear", bg="#7f8c8d", command=self.clear, **button_style
+        ).grid(row=0, column=3, padx=8)
+        # ======================
+        # TABLE CARD
+        # ======================
 
+        table_card = tk.Frame(self.frame, bg=self.WHITE, bd=1, relief="solid")
 
+        table_card.pack(fill="both", expand=True, padx=25, pady=10)
 
-        self.tree.column(
+        table_header = tk.Label(
+            table_card,
+            text="📅 Scheduled Hearings",
+            font=("Segoe UI", 13, "bold"),
+            bg=self.SECONDARY,
+            fg="white",
+            anchor="w",
+            padx=15,
+        )
+
+        table_header.pack(fill="x")
+
+        table_frame = tk.Frame(table_card, bg=self.WHITE)
+
+        table_frame.pack(fill="both", expand=True, padx=10, pady=10)
+
+        columns = (
             "id",
-            width=0,
-            stretch=False
-        )
-
-
-        self.tree.column(
             "case",
-            width=150
-        )
-
-
-        self.tree.column(
+            "complainant",
+            "respondent",
             "date",
-            width=130
-        )
-
-
-        self.tree.column(
-            "party",
-            width=300
-        )
-
-
-        self.tree.column(
             "time",
-            width=120
+            "proceeding",
         )
 
+        style = ttk.Style()
 
-        self.tree.column(
-            "type",
-            width=220
-        )
+        style.configure("Treeview", font=("Segoe UI", 10), rowheight=32)
 
+        style.configure("Treeview.Heading", font=("Segoe UI", 10, "bold"))
 
-        self.tree.column(
-            "status",
-            width=120
-        )
+        style.map("Treeview", background=[("selected", self.SECONDARY)])
 
+        self.table = ttk.Treeview(table_frame, columns=columns, show="headings")
 
+        headings = {
+            "id": "ID",
+            "case": "Case No",
+            "complainant": "Complainant",
+            "respondent": "Respondent",
+            "date": "Date",
+            "time": "Time",
+            "proceeding": "Proceeding",
+        }
+
+        widths = {
+            "id": 50,
+            "case": 120,
+            "complainant": 150,
+            "respondent": 150,
+            "date": 100,
+            "time": 90,
+            "proceeding": 180,
+        }
+
+        for col in columns:
+
+            self.table.heading(col, text=headings[col])
+
+            self.table.column(col, width=widths[col], anchor="center")
 
         scrollbar = ttk.Scrollbar(
-            table_frame,
-            orient="vertical",
-            command=self.tree.yview
+            table_frame, orient="vertical", command=self.table.yview
         )
 
+        self.table.configure(yscrollcommand=scrollbar.set)
 
-        self.tree.configure(
-            yscrollcommand=scrollbar.set
-        )
+        scrollbar.pack(side="right", fill="y")
 
+        self.table.pack(fill="both", expand=True)
 
-        scrollbar.pack(
-            side="right",
-            fill="y"
-        )
+        self.table.bind("<ButtonRelease-1>", self.select_row)
 
+    # ==========================
+    # ENTRY HELPER
+    # ==========================
 
-        self.tree.pack(
-            fill="both",
-            expand=True
-        )
+    def create_entry(self, parent, text, row):
 
+        tk.Label(
+            parent,
+            text=text,
+            bg=self.WHITE,
+            fg=self.TEXT,
+            font=("Segoe UI", 10, "bold"),
+        ).grid(row=row, column=0, sticky="w", padx=5, pady=8)
 
+        entry = tk.Entry(parent, width=32, font=("Segoe UI", 10), relief="solid", bd=1)
 
-        self.tree.tag_configure(
-            "odd",
-            background="#f5f8fc"
-        )
+        entry.grid(row=row, column=1, padx=5, pady=8)
 
+        return entry
 
-        self.tree.tag_configure(
-            "even",
-            background="white"
-        )
+    # ==========================
+    # LOAD DATA
+    # ==========================
 
+    def load_data(self):
 
+        for item in self.table.get_children():
 
-        self.tree.bind(
-            "<ButtonRelease-1>",
-            self.select
-        )
+            self.table.delete(item)
 
+        for s in self.manager.schedules:
 
+            self.table.insert(
+                "",
+                "end",
+                values=(
+                    s.id,
+                    s.case_no,
+                    s.complainant,
+                    s.respondent,
+                    s.date,
+                    s.time,
+                    s.proceeding,
+                ),
+            )
 
-    # ================= CRUD =================
-
+    # ==========================
+    # ADD
+    # ==========================
 
     def add(self):
 
-        if not self.validate():
-
-            return
-
-
-
         schedule = Schedule(
-
             self.manager.generate_id(),
-
-            self.case_no.get(),
-
-            self.complainant.get(),
-
-            self.respondent.get(),
-
-            self.date.get(),
-
-            self.get_time(),
-
+            self.case_entry.get(),
+            self.complainant_entry.get(),
+            self.respondent_entry.get(),
+            self.date_entry.get(),
+            self.time_entry.get(),
             self.proceeding.get(),
-
-            self.status.get()
-
         )
 
+        self.manager.add(schedule)
 
-
-        self.manager.add(
-            schedule
-        )
-
-
-        self.refresh()
+        self.load_data()
 
         self.clear()
 
-
-
-
+    # ==========================
+    # UPDATE
+    # ==========================
 
     def update(self):
 
-        if not self.selected_id:
+        if self.selected_id is None:
 
-            messagebox.showwarning(
-                "Warning",
-                "Select record first"
-            )
+            messagebox.showwarning("Warning", "Select a record first")
 
             return
 
-
-
         schedule = Schedule(
-
             self.selected_id,
-
-            self.case_no.get(),
-
-            self.complainant.get(),
-
-            self.respondent.get(),
-
-            self.date.get(),
-
-            self.get_time(),
-
+            self.case_entry.get(),
+            self.complainant_entry.get(),
+            self.respondent_entry.get(),
+            self.date_entry.get(),
+            self.time_entry.get(),
             self.proceeding.get(),
-
-            self.status.get()
-
         )
 
+        self.manager.update(self.selected_id, schedule)
 
-
-        self.manager.update(
-
-            self.selected_id,
-
-            schedule
-
-        )
-
-
-        self.refresh()
+        self.load_data()
 
         self.clear()
 
-
-
-
+    # ==========================
+    # DELETE
+    # ==========================
 
     def delete(self):
 
-        if not self.selected_id:
+        if self.selected_id is None:
 
             return
 
+        confirm = messagebox.askyesno("Delete", "Delete selected schedule?")
 
+        if confirm:
 
-        if messagebox.askyesno(
+            self.manager.delete(self.selected_id)
 
-            "Delete",
-
-            "Delete selected schedule?"
-
-        ):
-
-
-            self.manager.delete(
-
-                self.selected_id
-
-            )
-
-
-            self.refresh()
+            self.load_data()
 
             self.clear()
 
+    # ==========================
+    # SELECT ROW
+    # ==========================
 
+    def select_row(self, event=None):
 
+        selected = self.table.focus()
 
-
-    # ================= FUNCTIONS =================
-
-
-    def validate(self):
-
-
-        if not self.case_no.get().strip():
-
-            messagebox.showwarning(
-
-                "Required",
-
-                "Case number required"
-
-            )
-
-            return False
-
-
-
-        if not self.complainant.get().strip():
-
-            messagebox.showwarning(
-
-                "Required",
-
-                "Complainant required"
-
-            )
-
-            return False
-
-
-
-        if not self.respondent.get().strip():
-
-            messagebox.showwarning(
-
-                "Required",
-
-                "Respondent required"
-
-            )
-
-            return False
-
-
-
-        return True
-
-
-
-
-
-    def get_time(self):
-
-        return (
-
-            f"{self.hour.get()}:"
-
-            f"{self.minute.get()} "
-
-            f"{self.ampm.get()}"
-
-        )
-
-
-
-
-
-    def refresh(self):
-
-
-        self.tree.delete(
-
-            *self.tree.get_children()
-
-        )
-
-
-
-        for index,s in enumerate(
-
-            self.manager.schedules
-
-        ):
-
-
-            self.tree.insert(
-
-                "",
-
-                "end",
-
-                values=(
-
-                    s.id,
-
-                    s.case_no,
-
-                    s.date,
-
-                    s.get_parties(),
-
-                    s.time,
-
-                    s.proceeding,
-
-                    s.status
-
-                ),
-
-                tags=(
-
-                    "even"
-
-                    if index % 2 == 0
-
-                    else "odd"
-
-                )
-
-            )
-
-
-
-
-
-    def select(self,event):
-
-
-        item = self.tree.focus()
-
-
-        if not item:
+        if not selected:
 
             return
 
+        values = self.table.item(selected)["values"]
 
+        self.selected_id = values[0]
 
-        values = self.tree.item(
+        self.case_entry.delete(0, tk.END)
 
-            item,
+        self.case_entry.insert(0, values[1])
 
-            "values"
+        self.complainant_entry.delete(0, tk.END)
 
-        )
+        self.complainant_entry.insert(0, values[2])
 
+        self.respondent_entry.delete(0, tk.END)
 
+        self.respondent_entry.insert(0, values[3])
 
-        self.selected_id = int(
+        self.date_entry.set_date(values[4])
 
-            values[0]
+        self.time_entry.delete(0, tk.END)
 
-        )
+        self.time_entry.insert(0, values[5])
 
+        self.proceeding.set(values[6])
 
+        self.check_selected_date()
 
-        self.case_no.delete(
+    # ==========================
+    # CHECK HOLIDAY
+    # ==========================
 
-            0,
+    def check_selected_date(self, event=None):
 
-            tk.END
+        selected_date = self.date_entry.get()
 
-        )
+        if self.holiday_manager.is_holiday(selected_date):
 
+            holiday = self.holiday_manager.get_holiday_name(selected_date)
 
-        self.case_no.insert(
+            self.holiday_label.config(text=f"⚠ Holiday: {holiday}")
 
-            0,
+        else:
 
-            values[1]
+            self.holiday_label.config(text="")
 
-        )
-
-
-
-        parties = values[3].split(
-
-            " vs "
-
-        )
-
-
-
-        if len(parties) == 2:
-
-
-            self.complainant.delete(
-
-                0,
-
-                tk.END
-
-            )
-
-
-            self.complainant.insert(
-
-                0,
-
-                parties[0]
-
-            )
-
-
-
-            self.respondent.delete(
-
-                0,
-
-                tk.END
-
-            )
-
-
-            self.respondent.insert(
-
-                0,
-
-                parties[1]
-
-            )
-
-
-
-        self.proceeding.set(
-
-            values[5]
-
-        )
-
-
-
-        self.status.set(
-
-            values[6]
-
-        )
-
-
-
-
-
-    def search(self):
-
-
-        results = self.manager.search(
-
-            self.search_box.get()
-
-        )
-
-
-        self.tree.delete(
-
-            *self.tree.get_children()
-
-        )
-
-
-
-        for s in results:
-
-
-            self.tree.insert(
-
-                "",
-
-                "end",
-
-                values=(
-
-                    s.id,
-
-                    s.case_no,
-
-                    s.date,
-
-                    s.get_parties(),
-
-                    s.time,
-
-                    s.proceeding,
-
-                    s.status
-
-                )
-
-            )
-
-
-
-
+    # ==========================
+    # CLEAR
+    # ==========================
 
     def clear(self):
 
-
-        self.case_no.delete(
-
-            0,
-
-            tk.END
-
-        )
-
-
-        self.complainant.delete(
-
-            0,
-
-            tk.END
-
-        )
-
-
-        self.respondent.delete(
-
-            0,
-
-            tk.END
-
-        )
-
-
         self.selected_id = None
 
+        self.case_entry.delete(0, tk.END)
 
+        self.complainant_entry.delete(0, tk.END)
 
-        self.status.set(
+        self.respondent_entry.delete(0, tk.END)
 
-            "Pending"
+        self.time_entry.delete(0, tk.END)
 
-        )
+        self.proceeding.set("")
+
+        self.holiday_label.config(text="")

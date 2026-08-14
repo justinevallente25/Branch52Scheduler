@@ -16,5 +16,431 @@
         "time": "03:30 PM",
         "action": "ADD",
         "details": "Added case 1"
+    },
+    {
+        "date": "2026-07-23",
+        "time": "03:54 PM",
+        "action": "ADD",
+        "details": "Added case wdadawd"
+    },
+    {
+        "date": "2026-07-23",
+        "time": "04:05 PM",
+        "action": "ADD",
+        "details": "Added case a"
+    },
+    {
+        "date": "2026-07-23",
+        "time": "04:05 PM",
+        "action": "ADD",
+        "details": "Added case a"
+    },
+    {
+        "date": "2026-07-23",
+        "time": "04:08 PM",
+        "action": "ADD",
+        "details": "Added case dadwa"
+    },
+    {
+        "date": "2026-07-23",
+        "time": "04:11 PM",
+        "action": "ADD",
+        "details": "Added case dwadwa"
+    },
+    {
+        "date": "2026-07-23",
+        "time": "04:50 PM",
+        "action": "STATUS",
+        "details": "NLRC-001 marked Pending"
+    },
+    {
+        "date": "2026-07-23",
+        "time": "04:50 PM",
+        "action": "STATUS",
+        "details": "NLRC-001 marked Completed"
+    },
+    {
+        "date": "2026-07-23",
+        "time": "04:50 PM",
+        "action": "STATUS",
+        "details": "NLRC-001 marked Pending"
+    },
+    {
+        "date": "2026-07-23",
+        "time": "04:50 PM",
+        "action": "STATUS",
+        "details": "NLRC-001 marked Completed"
+    },
+    {
+        "date": "2026-07-27",
+        "time": "07:19 AM",
+        "action": "ADD",
+        "details": "Added case "
+    },
+    {
+        "date": "2026-07-27",
+        "time": "07:19 AM",
+        "action": "ADD",
+        "details": "Added case "
+    },
+    {
+        "date": "2026-07-27",
+        "time": "07:23 AM",
+        "action": "ADD",
+        "details": "Added case "
+    },
+    {
+        "date": "2026-07-27",
+        "time": "07:25 AM",
+        "action": "ADD",
+        "details": "Added case "
+    },
+    {
+        "date": "2026-07-30",
+        "time": "06:43 AM",
+        "action": "ADD",
+        "details": "Added case "
+    },
+    {
+        "date": "2026-07-30",
+        "time": "06:43 AM",
+        "action": "STATUS",
+        "details": "NLRC-001 marked Completed"
+    },
+    {
+        "date": "2026-07-30",
+        "time": "06:43 AM",
+        "action": "STATUS",
+        "details": "1 marked Completed"
+    },
+    {
+        "date": "2026-07-30",
+        "time": "04:16 PM",
+        "action": "ADD",
+        "details": "Added case a"
+    },
+    {
+        "date": "2026-07-31",
+        "time": "03:15 PM",
+        "action": "STATUS",
+        "details": "wdadawd marked Completed"
+    },
+    {
+        "date": "2026-07-31",
+        "time": "03:44 PM",
+        "action": "STATUS",
+        "details": "a marked Not Attended"
+    },
+    {
+        "date": "2026-07-31",
+        "time": "03:44 PM",
+        "action": "STATUS",
+        "details": "dadwa marked Not Attended"
+    },
+    {
+        "date": "2026-07-31",
+        "time": "03:44 PM",
+        "action": "STATUS",
+        "details": " marked Not Attended"
+    },
+    {
+        "date": "2026-07-31",
+        "time": "04:27 PM",
+        "action": "ADD",
+        "details": "Added case 202"
+    },
+    {
+        "date": "2026-08-03",
+        "time": "08:37 AM",
+        "action": "ADD",
+        "details": "Added case "
+    },
+    {
+        "date": "2026-08-03",
+        "time": "08:40 AM",
+        "action": "ADD",
+        "details": "Added case "
+    },
+    {
+        "date": "2026-08-03",
+        "time": "08:41 AM",
+        "action": "UPDATE",
+        "details": "Updated case "
+    },
+    {
+        "date": "2026-08-03",
+        "time": "08:41 AM",
+        "action": "DELETE",
+        "details": "Deleted case "
+    },
+    {
+        "date": "2026-08-05",
+        "time": "09:15 AM",
+        "action": "UPDATE",
+        "details": "Updated case 06-01095-26"
+    },
+    {
+        "date": "2026-08-05",
+        "time": "09:15 AM",
+        "action": "ADD",
+        "details": "Added case 06-01095-26"
+    },
+    {
+        "date": "2026-08-05",
+        "time": "09:15 AM",
+        "action": "DELETE",
+        "details": "Deleted case 06-01095-26"
+    },
+    {
+        "date": "2026-08-05",
+        "time": "09:17 AM",
+        "action": "ADD",
+        "details": "Added case 07-00603-26"
+    },
+    {
+        "date": "2026-08-05",
+        "time": "09:18 AM",
+        "action": "ADD",
+        "details": "Added case 07-00943-26"
+    },
+    {
+        "date": "2026-08-05",
+        "time": "09:20 AM",
+        "action": "ADD",
+        "details": "Added case 06-00520-26"
+    },
+    {
+        "date": "2026-08-05",
+        "time": "03:03 PM",
+        "action": "STATUS",
+        "details": "06-00520-26 marked Completed"
+    },
+    {
+        "date": "2026-08-05",
+        "time": "03:03 PM",
+        "action": "STATUS",
+        "details": "07-00943-26 marked Completed"
+    },
+    {
+        "date": "2026-08-05",
+        "time": "03:03 PM",
+        "action": "STATUS",
+        "details": "07-00603-26 marked Completed"
+    },
+    {
+        "date": "2026-08-05",
+        "time": "03:03 PM",
+        "action": "STATUS",
+        "details": "06-01095-26 marked Completed"
+    },
+    {
+        "date": "2026-08-05",
+        "time": "03:04 PM",
+        "action": "DELETE",
+        "details": "Deleted case NLRC-001"
+    },
+    {
+        "date": "2026-08-07",
+        "time": "08:43 AM",
+        "action": "ADD",
+        "details": "Added case 07-01078-26"
+    },
+    {
+        "date": "2026-08-07",
+        "time": "08:44 AM",
+        "action": "ADD",
+        "details": "Added case 07-01078-26"
+    },
+    {
+        "date": "2026-08-07",
+        "time": "08:45 AM",
+        "action": "ADD",
+        "details": "Added case 06-01331-26"
+    },
+    {
+        "date": "2026-08-07",
+        "time": "08:46 AM",
+        "action": "ADD",
+        "details": "Added case 06-01331-26"
+    },
+    {
+        "date": "2026-08-07",
+        "time": "08:48 AM",
+        "action": "ADD",
+        "details": "Added case 07-00269-26"
+    },
+    {
+        "date": "2026-08-07",
+        "time": "08:57 AM",
+        "action": "ADD",
+        "details": "Added case 06-00978-26"
+    },
+    {
+        "date": "2026-08-07",
+        "time": "08:58 AM",
+        "action": "UPDATE",
+        "details": "Updated case 07-01078-26"
+    },
+    {
+        "date": "2026-08-07",
+        "time": "08:58 AM",
+        "action": "UPDATE",
+        "details": "Updated case 06-01331-26"
+    },
+    {
+        "date": "2026-08-07",
+        "time": "08:59 AM",
+        "action": "UPDATE",
+        "details": "Updated case 07-00269-26"
+    },
+    {
+        "date": "2026-08-07",
+        "time": "08:59 AM",
+        "action": "UPDATE",
+        "details": "Updated case 06-00978-26"
+    },
+    {
+        "date": "2026-08-07",
+        "time": "09:12 AM",
+        "action": "UPDATE",
+        "details": "Updated case 06-00978-26"
+    },
+    {
+        "date": "2026-08-07",
+        "time": "09:12 AM",
+        "action": "UPDATE",
+        "details": "Updated case 07-00269-26"
+    },
+    {
+        "date": "2026-08-07",
+        "time": "09:12 AM",
+        "action": "UPDATE",
+        "details": "Updated case 06-01331-26"
+    },
+    {
+        "date": "2026-08-07",
+        "time": "09:12 AM",
+        "action": "UPDATE",
+        "details": "Updated case 07-01078-26"
+    },
+    {
+        "date": "2026-08-13",
+        "time": "09:20 AM",
+        "action": "STATUS",
+        "details": "06-00978-26 marked Completed"
+    },
+    {
+        "date": "2026-08-13",
+        "time": "09:20 AM",
+        "action": "STATUS",
+        "details": "07-00269-26 marked Completed"
+    },
+    {
+        "date": "2026-08-13",
+        "time": "09:20 AM",
+        "action": "STATUS",
+        "details": "06-01331-26 marked Completed"
+    },
+    {
+        "date": "2026-08-13",
+        "time": "09:20 AM",
+        "action": "STATUS",
+        "details": "07-01078-26 marked Completed"
+    },
+    {
+        "date": "2026-08-13",
+        "time": "09:23 AM",
+        "action": "ADD",
+        "details": "Added case (L)-06-00179-26"
+    },
+    {
+        "date": "2026-08-13",
+        "time": "09:34 AM",
+        "action": "DELETE",
+        "details": "Deleted case 1"
+    },
+    {
+        "date": "2026-08-13",
+        "time": "09:34 AM",
+        "action": "DELETE",
+        "details": "Deleted case wdadawd"
+    },
+    {
+        "date": "2026-08-13",
+        "time": "09:34 AM",
+        "action": "DELETE",
+        "details": "Deleted case a"
+    },
+    {
+        "date": "2026-08-13",
+        "time": "09:34 AM",
+        "action": "DELETE",
+        "details": "Deleted case dadwa"
+    },
+    {
+        "date": "2026-08-13",
+        "time": "09:35 AM",
+        "action": "DELETE",
+        "details": "Deleted case a"
+    },
+    {
+        "date": "2026-08-13",
+        "time": "09:35 AM",
+        "action": "DELETE",
+        "details": "Deleted case dwadwa"
+    },
+    {
+        "date": "2026-08-13",
+        "time": "09:35 AM",
+        "action": "DELETE",
+        "details": "Deleted case "
+    },
+    {
+        "date": "2026-08-13",
+        "time": "09:35 AM",
+        "action": "DELETE",
+        "details": "Deleted case "
+    },
+    {
+        "date": "2026-08-13",
+        "time": "09:35 AM",
+        "action": "DELETE",
+        "details": "Deleted case a"
+    },
+    {
+        "date": "2026-08-13",
+        "time": "09:35 AM",
+        "action": "DELETE",
+        "details": "Deleted case "
+    },
+    {
+        "date": "2026-08-13",
+        "time": "09:35 AM",
+        "action": "DELETE",
+        "details": "Deleted case 202"
+    },
+    {
+        "date": "2026-08-13",
+        "time": "09:35 AM",
+        "action": "DELETE",
+        "details": "Deleted case "
+    },
+    {
+        "date": "2026-08-13",
+        "time": "09:35 AM",
+        "action": "DELETE",
+        "details": "Deleted case "
+    },
+    {
+        "date": "2026-08-14",
+        "time": "09:53 AM",
+        "action": "STATUS",
+        "details": "06-01331-26 marked Completed"
+    },
+    {
+        "date": "2026-08-14",
+        "time": "09:53 AM",
+        "action": "STATUS",
+        "details": "07-01078-26 marked Completed"
     }
 ]
