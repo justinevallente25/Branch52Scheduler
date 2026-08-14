@@ -141,6 +141,10 @@ class ScheduleManager:
 
                         x["status"] = "Pending"
 
+                    if "queue_position" not in x:
+
+                        x["queue_position"] = 0
+
                     self.schedules.append(Schedule.from_dict(x))
 
     # ==========================
@@ -155,7 +159,11 @@ class ScheduleManager:
 
         today = datetime.now().strftime("%Y-%m-%d")
 
-        return [s for s in self.schedules if s.date == today]
+        return [
+            s
+            for s in self.schedules
+            if s.date == today and s.status not in ["Completed", "Not Attended"]
+        ]
 
     def get_upcoming_cases(self):
 
@@ -245,7 +253,77 @@ class ScheduleManager:
 
     def get_calendar_records(self):
 
-        return [s for s in self.schedules if s.status in ["Completed", "Not Attended"]]
+        return [
+            s
+            for s in self.schedules
+            if s.status in ["Completed", "Not Attended"]
+        ]
+
+    # ==========================
+    # TODAY QUEUE
+    # ==========================
+
+    def get_today_queue(self):
+
+        today = datetime.now().strftime("%Y-%m-%d")
+
+        queue = [
+            s
+            for s in self.schedules
+            if s.date == today
+            and s.status not in ["Completed", "Not Attended"]
+        ]
+
+        queue.sort(
+            key=lambda s: (
+                s.queue_position if s.queue_position > 0 else 999999,
+                s.time or "",
+                s.id,
+            )
+        )
+
+        return queue
+
+    # ==========================
+    # SKIP TODAY CASE
+    # ==========================
+
+    def skip_today_case(self, schedule_id):
+
+        queue = self.get_today_queue()
+
+        if not queue:
+
+            return
+
+        selected = None
+
+        for s in queue:
+
+            if s.id == schedule_id:
+
+                selected = s
+
+                break
+
+        if not selected:
+
+            return
+
+        queue = [s for s in queue if s.id != schedule_id]
+
+        queue.append(selected)
+
+        for position, schedule in enumerate(queue, start=1):
+
+            schedule.set_queue_position(position)
+
+        self.save()
+
+        self.log_manager.add_log(
+            "QUEUE",
+            f"{selected.case_no} moved to the back of today's queue",
+        )
 
     # ==========================
     # UPDATE STATUS
@@ -259,6 +337,9 @@ class ScheduleManager:
 
                 s.set_status(status)
 
-                self.log_manager.add_log("STATUS", f"{s.case_no} marked {status}")
+                self.log_manager.add_log(
+                    "STATUS",
+                    f"{s.case_no} marked {status}",
+                )
 
         self.save()

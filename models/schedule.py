@@ -13,6 +13,7 @@ class Schedule:
         time,
         proceeding,
         status="Pending",
+        queue_position=0,
     ):
 
         self.id = schedule_id
@@ -30,6 +31,8 @@ class Schedule:
         self.proceeding = proceeding
 
         self.status = status
+
+        self.queue_position = queue_position
 
     # ==========================
     # GET PARTIES
@@ -70,6 +73,14 @@ class Schedule:
         self.status = status
 
     # ==========================
+    # SET QUEUE POSITION
+    # ==========================
+
+    def set_queue_position(self, queue_position):
+
+        self.queue_position = queue_position
+
+    # ==========================
     # CONVERT TO DICT
     # ==========================
 
@@ -84,6 +95,7 @@ class Schedule:
             "time": self.time,
             "proceeding": self.proceeding,
             "status": self.status,
+            "queue_position": self.queue_position,
         }
 
     # ==========================
@@ -102,4 +114,5 @@ class Schedule:
             data["time"],
             data["proceeding"],
             data.get("status", "Pending"),
+            data.get("queue_position", 0),
         )

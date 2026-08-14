@@ -1,3 +1,4 @@
+# views/dashboard_components/cards.py
 import tkinter as tk
 
 

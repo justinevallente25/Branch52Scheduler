@@ -1,3 +1,4 @@
+# views/dashboard_components/actions.py
 import tkinter as tk
 
 

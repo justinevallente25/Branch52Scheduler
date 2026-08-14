@@ -1,3 +1,4 @@
+# views/dashboard_components/table.py
 import tkinter as tk
 from tkinter import ttk
 from datetime import datetime

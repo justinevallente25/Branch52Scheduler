@@ -1,3 +1,4 @@
+# views/dashboard_ui.py
 import tkinter as tk
 
 from views.dashboard_components.header import DashboardHeader
@@ -6,6 +7,7 @@ from views.dashboard_components.actions import DashboardActions
 from views.dashboard_components.table import DashboardTable
 from views.dashboard_components.status_menu import DashboardStatusMenu
 from views.dashboard_components.clock import DashboardClock
+from views.dashboard_components.hearing_queue import HearingQueue
 from views.dashboard_pages.today_frame import TodayFrame
 from views.dashboard_pages.upcoming_frame import UpcomingFrame
 from views.dashboard_pages.pending_frame import PendingFrame
@@ -74,6 +76,13 @@ class DashboardUI:
 
         self.actions.create()
 
+        self.hearing_queue = HearingQueue(
+            self.frame,
+            self.manager,
+            self.colors,
+            self.refresh_dashboard,
+        )
+
         self.status_menu = DashboardStatusMenu(
             self.frame, self.manager, self.refresh_dashboard
         )
@@ -97,6 +106,8 @@ class DashboardUI:
     def refresh_dashboard(self):
 
         self.cards.refresh()
+
+        self.hearing_queue.refresh()
 
         self.table.load_schedule()
 
