@@ -856,5 +856,65 @@
         "time": "08:20 AM",
         "action": "ADD",
         "details": "Added case 08-00127-26"
+    },
+    {
+        "date": "2026-08-17",
+        "time": "09:39 AM",
+        "action": "ADD",
+        "details": "Added case 08-00127-26"
+    },
+    {
+        "date": "2026-08-17",
+        "time": "09:40 AM",
+        "action": "STATUS",
+        "details": "08-00127-26 marked Completed"
+    },
+    {
+        "date": "2026-08-17",
+        "time": "09:40 AM",
+        "action": "STATUS",
+        "details": "08-00127-26 marked Pending"
+    },
+    {
+        "date": "2026-08-17",
+        "time": "09:40 AM",
+        "action": "ADD",
+        "details": "Added case 08-00127-26"
+    },
+    {
+        "date": "2026-08-17",
+        "time": "09:41 AM",
+        "action": "STATUS",
+        "details": "08-00127-26 marked Not Attended"
+    },
+    {
+        "date": "2026-08-17",
+        "time": "09:41 AM",
+        "action": "STATUS",
+        "details": "08-00127-26 marked Not Attended"
+    },
+    {
+        "date": "2026-08-17",
+        "time": "09:42 AM",
+        "action": "STATUS",
+        "details": "08-00127-26 marked Pending"
+    },
+    {
+        "date": "2026-08-17",
+        "time": "09:42 AM",
+        "action": "STATUS",
+        "details": "08-00127-26 marked Pending"
+    },
+    {
+        "date": "2026-08-17",
+        "time": "09:50 AM",
+        "action": "UPDATE",
+        "details": "Updated case 08-00127-26"
+    },
+    {
+        "date": "2026-08-17",
+        "time": "09:50 AM",
+        "action": "ADD",
+        "details": "Added case 08-00127-26"
     }
 ]

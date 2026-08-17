@@ -18,7 +18,11 @@ class PendingFrame(CaseListFrame):
         schedules = manager.get_pending_cases()
 
         super().__init__(
-            parent, "⏳ Pending Hearing Cases", schedules, back_command, manager
+            parent,
+            "⏳ Pending Hearing Cases",
+            schedules,
+            back_command,
+            manager,
         )
 
         self.create_print_button()
@@ -29,20 +33,28 @@ class PendingFrame(CaseListFrame):
 
     def create_print_button(self):
 
-        button_frame = tk.Frame(self.frame, bg="#eef2f7")
-
-        button_frame.pack(fill="x", padx=30, pady=5, before=self.table.master)
+        self.extra_action_frame.pack(
+            fill="x",
+            padx=30,
+            pady=(0, 5),
+        )
 
         tk.Button(
-            button_frame,
-            text="🖨 Print Selected Pending Cases",
+            self.extra_action_frame,
+            text="🖨 Print Selected Pending Case",
             width=28,
             bg="#1f4e79",
             fg="white",
+            activebackground="#2e75b6",
+            activeforeground="white",
             font=("Segoe UI", 10, "bold"),
             relief="flat",
+            bd=0,
+            cursor="hand2",
             command=self.print_selected,
-        ).pack(side="left")
+        ).pack(
+            side="left",
+        )
 
     # ==========================
     # PRINT SELECTED
@@ -50,34 +62,44 @@ class PendingFrame(CaseListFrame):
 
     def print_selected(self):
 
-        selected_rows = self.table.selection()
+        if not self.selected_id:
 
-        if not selected_rows:
-
-            messagebox.showwarning("No Selection", "Please select cases to print.")
+            messagebox.showwarning(
+                "No Selection",
+                "Please select a case to print.",
+            )
 
             return
 
         selected_schedules = []
 
-        for row in selected_rows:
+        for s in self.schedules:
 
-            values = self.table.item(row)["values"]
+            if s.id == self.selected_id:
 
-            schedule_id = values[0]
+                selected_schedules.append(s)
 
-            for s in self.schedules:
-
-                if s.id == schedule_id:
-
-                    selected_schedules.append(s)
+                break
 
         if not selected_schedules:
 
             return
 
-        filename = self.pdf_manager.generate_today_schedule(selected_schedules)
+        filename = self.pdf_manager.generate_today_schedule(
+            selected_schedules
+        )
 
         messagebox.showinfo(
-            "PDF Created", f"Selected pending cases printed.\n\n{filename}"
+            "PDF Created",
+            f"Selected pending case printed.\n\n{filename}",
         )
+
+    # ==========================
+    # REFRESH
+    # ==========================
+
+    def refresh(self):
+
+        self.schedules = self.manager.get_pending_cases()
+
+        self.load_data()

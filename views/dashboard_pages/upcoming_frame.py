@@ -18,7 +18,11 @@ class UpcomingFrame(CaseListFrame):
         self.pdf_manager = PDFManager()
 
         super().__init__(
-            parent, "🔔 Upcoming Hearing Schedule", schedules, back_command, manager
+            parent,
+            "🔔 Upcoming Hearing Schedule",
+            schedules,
+            back_command,
+            manager,
         )
 
         self.create_print_button()
@@ -29,20 +33,28 @@ class UpcomingFrame(CaseListFrame):
 
     def create_print_button(self):
 
-        button_frame = tk.Frame(self.frame, bg="#eef2f7")
-
-        button_frame.pack(fill="x", padx=30, pady=5, before=self.table.master)
+        self.extra_action_frame.pack(
+            fill="x",
+            padx=30,
+            pady=(0, 5),
+        )
 
         tk.Button(
-            button_frame,
+            self.extra_action_frame,
             text="🖨 Print Upcoming Schedule",
             width=22,
             bg="#1f4e79",
             fg="white",
+            activebackground="#2e75b6",
+            activeforeground="white",
             font=("Segoe UI", 10, "bold"),
             relief="flat",
+            bd=0,
+            cursor="hand2",
             command=self.print_schedule,
-        ).pack(side="left")
+        ).pack(
+            side="left",
+        )
 
     # ==========================
     # PRINT PDF
@@ -54,12 +66,28 @@ class UpcomingFrame(CaseListFrame):
 
         if not schedules:
 
-            messagebox.showwarning("No Schedule", "There are no upcoming hearings.")
+            messagebox.showwarning(
+                "No Schedule",
+                "There are no upcoming hearings.",
+            )
 
             return
 
-        filename = self.pdf_manager.generate_today_schedule(schedules)
+        filename = self.pdf_manager.generate_today_schedule(
+            schedules
+        )
 
         messagebox.showinfo(
-            "PDF Created", f"Upcoming schedule generated successfully.\n\n{filename}"
+            "PDF Created",
+            f"Upcoming schedule generated successfully.\n\n{filename}",
         )
+
+    # ==========================
+    # REFRESH
+    # ==========================
+
+    def refresh(self):
+
+        self.schedules = self.manager.get_upcoming_cases()
+
+        self.load_data()
