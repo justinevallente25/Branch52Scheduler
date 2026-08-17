@@ -245,7 +245,9 @@ class ScheduleUI:
                 "Reply",
                 "Execution Conference",
                 "P/P",
-                "Position Paper"
+                "Position Paper",
+                "Rejoinder",
+                "Mandatory Conference(Zoom)"
             ]
         )
 

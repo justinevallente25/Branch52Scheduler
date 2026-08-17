@@ -139,7 +139,7 @@
         "date": "2026-08-14",
         "time": "10:00 AM",
         "proceeding": "Execution Conference",
-        "status": "Pending",
+        "status": "Completed",
         "queue_position": null
     },
     {
@@ -150,7 +150,7 @@
         "date": "2026-08-14",
         "time": "10:00 AM",
         "proceeding": "Execution Conference",
-        "status": "Pending",
+        "status": "Completed",
         "queue_position": 0
     },
     {
@@ -161,6 +161,61 @@
         "date": "2026-08-14",
         "time": "10:00 AM",
         "proceeding": "Execution Conference",
+        "status": "Completed",
+        "queue_position": 0
+    },
+    {
+        "id": 31,
+        "case_no": "06-00520-26",
+        "complainant": "FREDDIE BACARON SORIANO",
+        "respondent": "DOHLE SEAFRONT CREWING (MANILA) INC.",
+        "date": "2026-08-18",
+        "time": "10:00 AM",
+        "proceeding": "Rejoinder",
+        "status": "Pending",
+        "queue_position": 0
+    },
+    {
+        "id": 32,
+        "case_no": "03-00453-26",
+        "complainant": "GREGORIO SAMSON FUENTES JR., ET AL",
+        "respondent": "DREAM WORKS CONSTRUCTION INC.",
+        "date": "2026-08-18",
+        "time": "9:30 AM",
+        "proceeding": "2nd Mandatory Conference",
+        "status": "Pending",
+        "queue_position": 0
+    },
+    {
+        "id": 33,
+        "case_no": "06-01095-26",
+        "complainant": "ROY MARCHAN FLORES",
+        "respondent": "SINGA SHIP MANAGEMENT PHILS. INC / CUNARD FLEET MARITIME SERVICES INTERNATIONAL LTD.",
+        "date": "2026-08-18",
+        "time": "9:30 AM",
+        "proceeding": "Mandatory Conference(Zoom)",
+        "status": "Pending",
+        "queue_position": 0
+    },
+    {
+        "id": 34,
+        "case_no": "08-00127-26",
+        "complainant": "ARLYN MALINAO GORGONIA",
+        "respondent": "CROCODILE TAPES AND CO. INC. / ST. TOMAS MANPOWER SERVICE CORP.",
+        "date": "2026-08-18",
+        "time": "9:30 AM",
+        "proceeding": "1st Mandatory Conference",
+        "status": "Pending",
+        "queue_position": 0
+    },
+    {
+        "id": 35,
+        "case_no": "08-00127-26",
+        "complainant": "JEFFREY BALTAZAR DIMALANTA",
+        "respondent": "BARCODE SUPER CLUB",
+        "date": "2026-08-18",
+        "time": "9:30 AM",
+        "proceeding": "1st Mandatory Conference",
         "status": "Pending",
         "queue_position": 0
     }
